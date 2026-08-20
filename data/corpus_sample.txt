@@ -1,0 +1,36 @@
+===== FILE: entry-agents-main/AGENTS.md =====
+# AGENTS.md
+
+This file provides guidance for AI coding agents working in this repository.
+
+**This is a living document.** When you make a mistake or learn something new about this codebase, add it to Lessons Learned.
+
+## Quick Links
+
+- Architecture and Workspace Structure
+- Code Style and Patterns
+- Lessons Learned
+
+===== FILE: entry-agents-main/README.md =====
+# Entry Agent
+
+Entry Agent is an open-source reference app for building and running background coding agents on Vercel.
+
+The agent does not run inside the VM. It runs outside the sandbox and interacts with it through tools.
+
+===== FILE: docs/contracts =====
+PATH:docs/contracts
+Q: List the three Entry permission modes.
+A: Ask | Auto Accept | Full Access
+
+Q: Describe the durable run state machine.
+A: RUN_CREATED -> STEP_STARTED -> MODEL_CALLED -> TOOL_REQUESTED -> TOOL_RUNNING -> TOOL_COMPLETED -> VERIFICATION
+
+Q: Where must permissions be enforced?
+A: Below the model layer: Permission Engine before Tool Executor.
+
+===== FILE: packages/agent/tools/example.ts =====
+export async function runTool(args: Record<string, unknown>) {
+  const started = Date.now();
+  return { ok: true, durationMs: Date.now() - started };
+}
